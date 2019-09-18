@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>select</title>
+		<link href="../select.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!--表单包裹层-->
+		<div style="width: 25%; display: inline-block;">
+			<div class="select-ui" id="xxx" data-dataSource="">
+				<div class="selected-bar">
+					<ul class="selected-items">
+						<li class="selected-item" data-value="1" data-text="结果1">
+							<span>选择1</span>
+							<i class="selected-icon select-icon select-icon-close"></i>
+						</li>
+						<li class="selected-item" data-value="1" data-text="结果1">
+							<span>选择2</span>
+							<i class="selected-icon select-icon select-icon-close"></i>
+						</li>
+					</ul>
+					<span class="refresh-btn select-icon select-icon-refresh" id="xxx__refresh-btn"></span>
+				</div>
+				<div class="dropdown-items" id="xxx__dropdown_items" style="">
+					<div class="search-bar">
+						<input class="search-input" id="xxx__select-input" placeholder="请输入过滤关键词">
+					</div>
+					<div class="items-box" id="xxx__items-box">
+						<ul class="tree" style="">
+							<li class="select-option" data-value="023" data-text="重庆市">
+								<i class="item-icon select-icon "></i>
+								<span class="select-item">重庆市</span>
+							</li>
+							<li class="select-option" data-value="010" data-text="北京市">
+								<i class="item-icon select-icon "></i>
+								<span class="select-item">北京市</span>
+							</li>
+							<li class="select-option" data-value="028" data-text="四川">
+								<i class="item-icon select-icon "></i>
+								<span class="select-item">四川</span>
+								<i class="unfold-icon select-icon select-icon-enter"></i>
+								<ul class="tree" style="padding-left: 16px;">
+									<li class="select-option" data-parent="028" data-value="03001" data-text="成都市">
+										<i class="item-icon select-icon "></i>
+										<span class="select-item">成都市</span>
+									</li>
+									<li class="select-option" data-parent="028" data-value="03002" data-text="宜宾市">
+										<i class="item-icon select-icon "></i>
+										<span class="select-item">宜宾市</span>
+										<i class="unfold-icon select-icon select-icon-enter"></i>
+										<ul class="tree" style="padding-left: 16px;">
+											<li class="select-option" data-parent="03002" data-value="0300201" data-text="翠屏区">
+												<i class="item-icon select-icon "></i>
+												<span class="select-item">翠屏区</span>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!--信息提示区-->
+					<div class="select-remind-box" id="xxx__select-remind-box" style="display: none;">
+						无匹配的选项！
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<!-- jQuery -->
+	<script src="http://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+	<script>
+		var data = [
+			{
+				"text": "重庆市",
+				"value": '023',
+				"selected": false,
+				"nodes": null
+			}, {
+				"text": "北京市",
+				"value": "02002",
+				"selected": false,
+				"nodes": null
+			}, {
+				"text": "四川",
+				"value": "028",
+				"selected": false,
+				"nodes": [
+					{
+						"text": "成都市",
+						"value": "03001",
+						"selected": false,
+						"nodes": null
+					},
+					{
+						"text": "宜宾市",
+						"value": "03002",
+						"selected": false,
+						"nodes": [
+							{
+								"text": "翠屏区",
+								"value": "0300201",
+								"selected": false,
+								"nodes": null
+							}
+						]
+					}
+				]
+			}];
+			
+			$("#xxx__select-input").keyup(function(e){
+				var target = $(e.target);
+				var keyword = target.val();
+				var matchCount = 0;
+				$("#xxx__items-box").find(".select-item").each(function(index, ele){
+					var element = $(ele);
+					var item = element.parent("li");
+//					element.html(item.data('text'));
+//					console.log(element.html());
+					var text = item.data('text');
+					var value = item.data('value');
+					var pos = text.indexOf(keyword);
+					//如果关键词没有，则全部恢复
+					if(!keyword || keyword.length == 0){
+						element.html(text);
+						item.show();
+						matchCount++;
+						return;
+					}
+					if(pos>-1){
+						element.html(text.slice(0,pos)
+							+ '<span class="search-result">'
+							+ keyword
+							+ '</span>'
+							+ text.slice(pos + keyword.length)
+						);
+						item.show();
+						item.parents(".select-option").show();
+						matchCount++;
+					}else{
+						item.hide();
+					}
+				});
+				//没有匹配的结果，显示提示信息
+				if(matchCount == 0){
+					showMessage('无匹配的选项！');
+				}else{
+					var remindBox = $("#xxx__select-remind-box");
+					remindBox.html('');
+					remindBox.hide();
+				}
+			});
+			$("#xxx__refresh-btn").click(function(){
+				console.log('重新出发setDataSource()');
+			});
+			
+			$("#xxx").find(".selected-bar").click(function(){
+				$("#xxx").find(".dropdown-items").toggle();
+				var remindBox = $("#xxx__select-remind-box");
+				remindBox.html('');
+				remindBox.hide();
+			});
+			
+			function showMessage(message){
+				var remindBox = $("#xxx__select-remind-box");
+				remindBox.html(message);
+				remindBox.show();
+			};
+			
+	</script>
+</html>

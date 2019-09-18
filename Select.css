@@ -1,0 +1,288 @@
+@font-face {font-family: "select-icon";
+  src: url('font/select.eot?t=1568705150522'); /* IE9 */
+  src: url('font/select.eot?t=1568705150522#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQwAAsAAAAACMwAAAPhAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMAqEPINqATYCJAMYCw4ABCAFhREHUBukB1GU7kmL7GeCTaeu4MUgRiA6oW0VYhkX6+bFugcU/8TD8/vhzn3vfZlpVEnrbmlxaeAJGonQoCQSpVBpi2TREv7/rukvshpnRKBKCvDnmh6+XDogoTfX+glbNeU3YVl30uaSiuWLmUzVqRvuM9cRy4MnlMntBbFRRnxqfQNPQOP/6e9Xum8rBJ99hRWNLIwOoQXM8YjEIrwbPwC/YeziMq4T6DVliuXw5CoJboU2LxCvmVQEd0yllMSGVqhzthYQHzm0aS69Ax/cn4//FkIFJFUG2tLbp8cV2PuV+LfacEfGRmH3ZwCzi4wNoBAPuaZ7Nt+9waZXGm+3CdSKkPqyt8cl/7VZsqSeqTPJCvPPEzXQRP0Qdyms9ottIgS/OoTEbwiZ34FQ+J1UKiire8xu8BmA7xC34EqS0F+0tJzKxDCBMUNOZy1xV9cuEgFCVkSI8jik9t6FqMe0Eh5tHI3oEsANmNNoiMCGNzy4NcSpXwyJAJ/QkGUIPZ4G6qpqWKE8GHL+1Lp+6zz/De6/1iXMkbD6LhkNQuuXWZGG1tVgdKwY8sswiMg/8gxn7V8+5NZC+3oXMU/DB1ZYa9eKyAoaRmqNvOVCmhjCbfFIKyk5WYTlhTmJ04/7FFqmy6r1+tnoQL8PbZB5f1LUmslU0JhcaB7UVS603WVddipnlRJ0BenM5oKmJNCTK0ucftqfh5bZboYAIsU+WUKCzKcrEojFCxOZJSG2NpZfW0cC3kMLJVMjbYb5x0xleKl3Kbwesl8CLdvuWOMl5p5djo72NjsGOxq7y80uGLqrwlddYjrMWNhKT4Xg+YswWlLRJwfSYcgAdGc2Q4C8Z3kDpC96FuiStnLpL/A3vr7btnf4b/27kQzAt0/is7ulU0B+D7QStdkvnF2zochcTV0XsbSZJVC76IVpC3p1NS87HkZ99CWZqB1N6DMRwqQxA7M+y6DgNkGF2wI17hT2WpfY3WfMM5soasCaVwDDpHeYDHqE2aRPUHD/qIoWCNS4RNjrLlaP7LMUtl4Tx6LACindEVbWNWqkCq+JCpbFdLxzHKW6UuRsYeBIIzcZbCfzM3M5vlPUkPe3wryWFoSghHJdJScdJ6Oi6MTgeq1q9kxVCGNjdpbmfWmmrKvgdYBDRQKqIEruEEyZTkPtw4LXW0iByoTpst8ThyR1iiJeXkEOSDNrixgaDDFvxlw9cCrS6pac42rTNckCQaAIiqN1KuJk1gakMG4dYeRLaj2bZlRbOA0bZvVWtK5oZlyJekmZTAXaEXVIoBTKoBwqoBI0b5AaK82qo6zoJjpUptVNB262ndsNJVACAAAAAA==') format('woff2'),
+  url('font/select.woff?t=1568705150522') format('woff'),
+  url('font/select.ttf?t=1568705150522') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('font/select.svg?t=1568705150522#select-icon') format('svg'); /* iOS 4.1- */
+}
+
+.select-icon {
+  font-family: "select-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.select-icon-refresh:before {
+  content: "\e653";
+}
+
+.select-icon-close:before {
+  content: "\e6ff";
+}
+
+.select-icon-minus:before {
+  content: "\e700";
+}
+
+.select-icon-enter:before {
+  content: "\e701";
+}
+
+.select-icon-plus:before {
+  content: "\e702";
+}
+
+
+/*组件的宽度与包裹组件的容器一致*/
+.select-ui{
+	width: 100%;
+	-moz-user-select: none; 
+	-khtml-user-select: none; 
+	user-select: none;
+}
+
+.select-ui .selected-bar{
+	border-color: #ccc;
+	position: relative;
+	border: 1px solid #E6ECF0;
+	/*z-index: 99999;*/
+	/*padding: 4px;*/
+	height: 32px;
+	overflow-y: visible;
+	overflow-x: hidden;
+}
+.select-ui .selected-bar ul{
+	display: block;
+	width: 100%;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+
+.select-ui .selected-bar .refresh-btn{
+	position: absolute;
+	cursor: pointer;
+	right: 4px;
+	top: 4px;
+	height: 28px;
+	border: none;
+	background: none;
+	width: 28px;
+	font-size: 20px;
+	color: #999;
+	text-align: center;
+	line-height: 28px;
+}
+
+.select-ui .selected-bar .refresh-btn:hover{
+	color: #55A532!important;
+}
+
+.select-ui .selected-bar .refresh-btn:after {
+  display: block;
+  position: absolute;
+  left: -5px;
+  border-left: 1px solid #666;
+  height: 16px;
+  top: 7px;
+}
+
+.select-ui .selected-bar .selected-item span{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: default;
+}
+.select-ui .selected-bar .selected-item{
+		display: inline-block;
+		height: 26px;
+    padding: 0px 20px 0px 14px;
+    margin: 2px 2px 2px 2px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    border: 1px solid #E6ECF0;
+    background: none;
+    border-radius: 3px;
+    color: #666;
+    line-height: 26px;
+}
+.select-ui .selected-bar .selected-icon{
+		width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+    background-size: 10px;
+    line-height: 24px;
+    text-align: center;
+    margin-left: 10px;
+    box-sizing: content-box;
+    font-size: 16px !important;
+    color: #999 !important;
+}
+
+.select-ui .selected-bar .selected-icon:hover{
+	color: #DF5000!important;
+}
+
+/*组件下拉菜单*/
+.select-ui .dropdown-items{
+		/*display: none;*/
+    background: #fff;
+    position: absolute;
+    z-index: 1000;
+    width: calc(25% - 4px);
+    /*max-height: 240px;*/
+    height: auto;
+    margin-top: 4px;
+    border: 1px solid #E6ECF0;
+}
+/*搜索框*/
+.select-ui .dropdown-items .search-bar{
+	position: relative;
+}
+
+.select-ui .dropdown-items .search-bar .search-input{
+		border: 1px solid #E6ECF0;
+    box-shadow: none;
+    color: #333;
+    background: #FFFFFF;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 26px;
+    line-height: 28px;
+    width: calc(100% - 36px);
+    margin: 2px;
+}
+
+.select-ui .dropdown-items .items-box{
+	position: relative;
+	max-height: 350px;
+	overflow-y: visible;
+	overflow-x: hidden;
+}
+
+.select-ui .dropdown-items .items-box li{
+		font-weight: 500;
+    text-indent: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    min-height: 30px;
+    line-height: 30px;
+    color: #333;
+    border-top: 1px solid #E6ECF0;
+}
+.select-ui .dropdown-items .items-box ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.select-ui .dropdown-items .items-box li{
+	position: relative;
+	font-weight: 500;
+	text-indent: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 14px;
+	min-height: 30px;
+	line-height: 30px;
+	color: #333;
+	border-top: 1px solid #E6ECF0;
+}
+
+.select-ui .dropdown-items .items-box li > .select-item{
+	display: block;
+	position: absolute;
+	margin-left: 26px;
+	cursor: pointer;
+	padding-left: 0px;
+	left: 0px;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.select-ui .dropdown-items .items-box .select-item .search-result{
+	text-decoration: underline;
+	color:#ccc;
+}
+
+.select-ui .dropdown-items .items-box li > .select-item[disabled]{
+	cursor: not-allowed;
+}
+
+.select-ui .dropdown-items .items-box li > .item-icon{
+	display: block;
+	position: relative;
+	cursor: pointer;
+	left: 0;
+	top: 0;
+	width: 31px;
+	height:31px;
+}
+
+
+.select-ui .dropdown-items .items-box .tree .tree-unfold>.unfold-icon{
+    color: #E6ECF0;
+    font-size: 20px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    transition: transform 0.3s;
+    -webkit-transition: transform 0.3s;
+		transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    z-index: 9;
+    cursor: pointer;
+}
+
+.select-ui .dropdown-items .items-box .tree .tree-unfold>ul{
+	border-left:1px solid #ccc;
+}
+.select-ui .dropdown-items .items-box .tree li>.unfold-icon{
+		color: #E6ECF0;
+    font-size: 20px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    transition: transform 0.3s;
+    -webkit-transition: transform 0.3s;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    z-index: 9;
+    cursor: pointer;
+}
+
+.select-ui .dropdown-items .select-remind-box{
+		display: block;
+		font-weight: 500;
+    text-indent: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+		min-height: 30px;
+		line-height: 30px;
+		height: 30px;
+    color: #333;
+    border-top: 1px solid #E6ECF0;
+}
