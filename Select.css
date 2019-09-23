@@ -1,10 +1,10 @@
 @font-face {font-family: "select-icon";
-  src: url('font/select.eot?t=1568705150522'); /* IE9 */
-  src: url('font/select.eot?t=1568705150522#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQwAAsAAAAACMwAAAPhAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMAqEPINqATYCJAMYCw4ABCAFhREHUBukB1GU7kmL7GeCTaeu4MUgRiA6oW0VYhkX6+bFugcU/8TD8/vhzn3vfZlpVEnrbmlxaeAJGonQoCQSpVBpi2TREv7/rukvshpnRKBKCvDnmh6+XDogoTfX+glbNeU3YVl30uaSiuWLmUzVqRvuM9cRy4MnlMntBbFRRnxqfQNPQOP/6e9Xum8rBJ99hRWNLIwOoQXM8YjEIrwbPwC/YeziMq4T6DVliuXw5CoJboU2LxCvmVQEd0yllMSGVqhzthYQHzm0aS69Ax/cn4//FkIFJFUG2tLbp8cV2PuV+LfacEfGRmH3ZwCzi4wNoBAPuaZ7Nt+9waZXGm+3CdSKkPqyt8cl/7VZsqSeqTPJCvPPEzXQRP0Qdyms9ottIgS/OoTEbwiZ34FQ+J1UKiire8xu8BmA7xC34EqS0F+0tJzKxDCBMUNOZy1xV9cuEgFCVkSI8jik9t6FqMe0Eh5tHI3oEsANmNNoiMCGNzy4NcSpXwyJAJ/QkGUIPZ4G6qpqWKE8GHL+1Lp+6zz/De6/1iXMkbD6LhkNQuuXWZGG1tVgdKwY8sswiMg/8gxn7V8+5NZC+3oXMU/DB1ZYa9eKyAoaRmqNvOVCmhjCbfFIKyk5WYTlhTmJ04/7FFqmy6r1+tnoQL8PbZB5f1LUmslU0JhcaB7UVS603WVddipnlRJ0BenM5oKmJNCTK0ucftqfh5bZboYAIsU+WUKCzKcrEojFCxOZJSG2NpZfW0cC3kMLJVMjbYb5x0xleKl3Kbwesl8CLdvuWOMl5p5djo72NjsGOxq7y80uGLqrwlddYjrMWNhKT4Xg+YswWlLRJwfSYcgAdGc2Q4C8Z3kDpC96FuiStnLpL/A3vr7btnf4b/27kQzAt0/is7ulU0B+D7QStdkvnF2zochcTV0XsbSZJVC76IVpC3p1NS87HkZ99CWZqB1N6DMRwqQxA7M+y6DgNkGF2wI17hT2WpfY3WfMM5soasCaVwDDpHeYDHqE2aRPUHD/qIoWCNS4RNjrLlaP7LMUtl4Tx6LACindEVbWNWqkCq+JCpbFdLxzHKW6UuRsYeBIIzcZbCfzM3M5vlPUkPe3wryWFoSghHJdJScdJ6Oi6MTgeq1q9kxVCGNjdpbmfWmmrKvgdYBDRQKqIEruEEyZTkPtw4LXW0iByoTpst8ThyR1iiJeXkEOSDNrixgaDDFvxlw9cCrS6pac42rTNckCQaAIiqN1KuJk1gakMG4dYeRLaj2bZlRbOA0bZvVWtK5oZlyJekmZTAXaEXVIoBTKoBwqoBI0b5AaK82qo6zoJjpUptVNB262ndsNJVACAAAAAA==') format('woff2'),
-  url('font/select.woff?t=1568705150522') format('woff'),
-  url('font/select.ttf?t=1568705150522') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('font/select.svg?t=1568705150522#select-icon') format('svg'); /* iOS 4.1- */
+  src: url('select.eot?t=1569145970920'); /* IE9 */
+  src: url('select.eot?t=1569145970920#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAASoAAsAAAAACXQAAARZAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDRgqFPIRcATYCJAMcCxAABCAFhREHWRs5CMiemjwxGKg2CI0AEAkcKHied3s996GBipmM+bQOFZOYDqvbVo+unflz7s1HEGZ3GcjPbgwKofDS5pfTjEDtZgGF3BwqQGGnN2GZB+jY++7frUIjEwuwkkZr7cYUGeAARxNYAwIb/xv+fqY/bSkQpTDBvb+oxArqAE7ABMm8xiI8kBP1W2Dn0IUEvQwBjl4yPFNdA8MoTPffJkA2qSKgsMtEj6ELW2uGnE3klQA7c6cKwH399+Wf/mBDMaL/3jWHOmXU8m99XboWCWFahRCX5wCul0ADIyB0yHao6wg+MzyCj/NO9psBYYsOhbJCqi49nEn/QklfiFhVK/qHp9EZTAqS7a9qgZotbDCNm1jmQ/Av5ENDHXzoqBM+DNQpPkzUpZtQiFqbW4EoUAppBHyESomIfFrzwLLCFpUt2vY4eK+Y9qvWbTj040TO4l33ITbSYcNDpRtUz3/eubt0txs8ZXtuO8Zx7uO8zpsfqxy/Ys6TDl3gYcd/JvJXPRdUrt18EsSysumtOlRVzZZ2qLJyJqhevfHoafC883PvVABIA/BpFRUHFX+mK//OVNfNVf1bfhqJ8TttqheUmjp67MUHHTcWA2o3rCUDHPFua8dHYs6T4y8xLzselA8jsUHnwyfeeeEk3otzWkRlYUZMh61xP+ZtrNsyE/NwvEwe21l3nfUpkGU7k9a1tOx2b1v8o2U7+e39ur3Pby+MVxennOba5533w1L2hG5ZquAbBRZ0FCaq4P3Fet2N7E93ZNluMfuYvh5taj4dcbnD96ao6EuRaxdzfGPft2ApE25umspwMhacdWmdHu1NSFDRopCAIuN0cIzU6n36JJTXMkAZpxc+jeu5oeL85StREWsgF1V9Cyn+7piaHqweLB0rUT/F7dPsIW8P2tu3BrdrqX7v2r/sbfbE9+7UzKroa2PdaJrStJI7kuLI0TR4NjoPVo2mkQkCwqOnia43ivvmIATauOcLCNQPFCAsZmoTT6O/4drsZe3u1jP+57oJQG3iQUZ5ITraKehcEKcWnzTilG36R/o3W+lVWy5AgGV5SYSqcEQrnDBxaOejPE3H1EEQrkt8ZSiWPgyNazCs4+NgA58Jm/gShmO4ocuu9jbxkZQHhtkDhujkjqG0UsrQdPIJ6/g/ZJCDC5t4X4Zjk0y+0zUo3HXmMxA4yFhcwVSyTCJl8+h50EHiWff4QVAWdIHdyq3AKDCX4igudveGxLrBBFbeAXdRKXFOMGGWgbsKzgRdt7DNrHLSwpzKuV2X79kI+6GcZBkoaj4MQIADyGAiK2AUCQsToi7iRJ0H0AH0cbJxyYMACgufXgRYfB0h8CiRWkVpPlhRTiEd3K0y01ZtoxA5F1Eo4ZcIGIFhYYB1tdoB6NewBWaHa8olu3LUHEGbOnmxG0mrytWrMRYpca3jf5cVMiGGFLJCdsgJuax9INKjrho8DwKT1MB+3XIhcJKaC27g4Kj7mf+MbhkRAgAAAA==') format('woff2'),
+  url('select.woff?t=1569145970920') format('woff'),
+  url('select.ttf?t=1569145970920') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('select.svg?t=1569145970920#select-icon') format('svg'); /* iOS 4.1- */
 }
 
 .select-icon {
@@ -17,6 +17,10 @@
 
 .select-icon-refresh:before {
   content: "\e653";
+}
+
+.select-icon-search:before {
+  content: "\e7b3";
 }
 
 .select-icon-close:before {
@@ -67,8 +71,8 @@
 .select-ui .selected-bar .refresh-btn{
 	position: absolute;
 	cursor: pointer;
-	right: 4px;
-	top: 4px;
+	right: 2px;
+	top: 2px;
 	height: 28px;
 	border: none;
 	background: none;
@@ -98,35 +102,35 @@
 	cursor: default;
 }
 .select-ui .selected-bar .selected-item{
-		display: inline-block;
-		height: 26px;
-    padding: 0px 20px 0px 14px;
-    margin: 2px 2px 2px 2px;
-    vertical-align: middle;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    position: relative;
-    border: 1px solid #E6ECF0;
-    background: none;
-    border-radius: 3px;
-    color: #666;
-    line-height: 26px;
+	display: inline-block;
+	height: 26px;
+	padding: 0px 20px 0px 14px;
+	margin: 2px 2px 2px 2px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	position: relative;
+	border: 1px solid #E6ECF0;
+	background: none;
+	border-radius: 3px;
+	color: #666;
+	line-height: 26px;
 }
 .select-ui .selected-bar .selected-icon{
-		width: 16px;
-    height: 16px;
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    cursor: pointer;
-    background-size: 10px;
-    line-height: 24px;
-    text-align: center;
-    margin-left: 10px;
-    box-sizing: content-box;
-    font-size: 16px !important;
-    color: #999 !important;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	cursor: pointer;
+	background-size: 10px;
+	line-height: 24px;
+	text-align: center;
+	margin-left: 10px;
+	box-sizing: content-box;
+	font-size: 16px !important;
+	color: #999 !important;
 }
 
 .select-ui .selected-bar .selected-icon:hover{
@@ -139,8 +143,6 @@
     background: #fff;
     position: absolute;
     z-index: 1000;
-    width: calc(25% - 4px);
-    /*max-height: 240px;*/
     height: auto;
     margin-top: 4px;
     border: 1px solid #E6ECF0;
@@ -159,8 +161,28 @@
     font-size: 16px;
     height: 26px;
     line-height: 28px;
-    width: calc(100% - 36px);
+    width: calc(100% - 44px);
     margin: 2px;
+}
+
+.select-ui .dropdown-items .search-bar .search-btn{
+		position: absolute;
+		cursor: pointer;
+		right: 4px;
+		top: 4px;
+		height: 28px;
+		border: none;
+		background: none;
+		width: 28px;
+		font-size: 20px;
+		color: #E6ECF0;
+		text-align: center;
+		line-height: 28px;
+}
+
+.select-ui .dropdown-items .search-bar .search-btn:hover{
+		display: block;
+	  color: #DF5000;
 }
 
 .select-ui .dropdown-items .items-box{
@@ -170,18 +192,6 @@
 	overflow-x: hidden;
 }
 
-.select-ui .dropdown-items .items-box li{
-		font-weight: 500;
-    text-indent: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 14px;
-    min-height: 30px;
-    line-height: 30px;
-    color: #333;
-    border-top: 1px solid #E6ECF0;
-}
 .select-ui .dropdown-items .items-box ul{
 	list-style: none;
 	margin: 0;
@@ -212,13 +222,27 @@
 	width: 100%;
 	z-index: 1;
 }
-
-.select-ui .dropdown-items .items-box .select-item .search-result{
+/**
+ * 进行本地过滤时加下划线
+ */
+.select-ui .dropdown-items .items-box .search-result{
 	text-decoration: underline;
 	color:#ccc;
 }
 
-.select-ui .dropdown-items .items-box li > .select-item[disabled]{
+.select-ui .dropdown-items .items-box li[disabled=disabled]:hover .select-item{
+	cursor: not-allowed;
+}
+
+.select-ui .dropdown-items .items-box li[disabled]:hover .select-item{
+	cursor: not-allowed;
+}
+
+.select-ui .dropdown-items .items-box li[disabled=disabled]:hover .select-item{
+	cursor: not-allowed;
+}
+
+.select-ui .dropdown-items .items-box li[disabled]:hover .item-icon{
 	cursor: not-allowed;
 }
 

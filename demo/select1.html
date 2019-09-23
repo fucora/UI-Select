@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>远程搜索</title>
+		<link href="../select.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!--表单包裹层-->
+		<div style="width: 360px; display: inline-block;">
+			<div class="select-ui" id="xxx" data-dataSource=""/>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../Select.js" ></script>
+		<script>
+		var data1 = {
+					"nodes": [{
+						"text": "重庆市",
+						"value": "023",
+						"selected": false,
+						"nodes": null
+					}, {
+						"text": "北京市",
+						"value": "010",
+						"selected": false,
+						"nodes": null
+					}, {
+						"text": "四川",
+						"value": "028",
+						"selected": false,
+						"nodes": [{
+								"text": "成都市",
+								"value": "03001",
+								"selected": false,
+								"nodes": null
+							}, {
+								"text": "宜宾市",
+								"value": "03002",
+								"selected": false,
+								"nodes": [{
+									"text": "翠屏区",
+									"value": "0300201",
+									"selected": false
+								}]
+							}]
+						}]
+					};
+		var data2 = {"nodes": [{
+					"text": "重庆市",
+					"value": "023",
+					"selected": false,
+					"nodes": null
+						}, 
+					{
+						"text": "北京市",
+						"value": "010",
+						"selected": false,
+						"nodes": null
+					}]
+		};
+		var data3 = {"nodes": [{
+						"text": "重庆市",
+						"value": "023",
+						"selected": false,
+						"nodes": null
+					}]
+		};
+			var select = $("#xxx").select({
+				mode: 'remote',
+				enterSearch: true
+			}, function(select, keyword, pageSize, pageNo){
+				var pageSize = 20;
+				var pageNo = 1;
+				var total = 20;
+				if(keyword == '直辖市'){
+					return data2;
+				}else if(keyword == '重庆'){
+					return data3;
+				}else{
+					return data1;
+				}
+			});
+		</script>
+	</body>
+</html>
+				
