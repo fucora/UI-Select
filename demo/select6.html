@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>多选，可选择父节点，不可重复选</title>
+		<title>本地数据源</title>
 		<link href="../select.css" rel="stylesheet" />
 	</head>
 
@@ -68,24 +68,14 @@
 					}]
 		};
 			var select1 = $("#xxx").select({
-				mode: 'remote',
+				mode: 'local',
 				placeholder: '请选择城市',
-				multiple:true,//是否可以多选
+				multiple:false,//是否可以多选
 				selectParent:true,//是否可以选择父节点
 				duplicate:false,//是否可以重复选
 				enterSearch: true//
-			}, function(select, keyword, pageSize, pageNo){
-				var pageSize = 20;
-				var pageNo = 1;
-				var total = 20;
-				if(keyword == '直辖市'){
-					return data2;
-				}else if(keyword == '重庆'){
-					return data3;
-				}else{
-					return data1;
-				}
-			});
+			})
+			.setDataSource(data1);
 		</script>
 	</body>
 </html>

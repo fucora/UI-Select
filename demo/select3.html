@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>多选，可选择父节点，不可重复选</title>
+		<title>多选，可选择父节点，可重复选</title>
 		<link href="../select.css" rel="stylesheet" />
 	</head>
 
@@ -72,7 +72,7 @@
 				placeholder: '请选择城市',
 				multiple:true,//是否可以多选
 				selectParent:true,//是否可以选择父节点
-				duplicate:false,//是否可以重复选
+				duplicate:true,//是否可以重复选
 				enterSearch: true//
 			}, function(select, keyword, pageSize, pageNo){
 				var pageSize = 20;

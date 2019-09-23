@@ -1,14 +1,14 @@
-# UI-Select4
+# UI-Select
 前端用户界面组件之选择框组件
 
-# Select4组件
+# Select组件
 
 选择框组件用于实现单选，多选，树形多层级选择，重复有序选择，不重复无需选择，父节点是否能选等交互的组件。Select4组件与SearchView的区别在于Select4所提供的数据源为无关键交互的数据源接口。UI界面中的搜索框进行的是本地数据过滤。但是在级联去情况下，数据源由静态数据源，以JSON方式提供。
 
 ## 组件生命周期
 
-1. 调用$("#XXX").select4()创建UI界面,返回Select4对象
-2. 调用select4.setDataSource()传入JSON数据，对组件进行重新渲染，清除已选择区域已选中词条，绑定选项触发事件
+1. 调用$("#XXX").select()创建UI界面,返回Select对象
+2. 调用select.setDataSource()传入JSON数据，对组件进行重新渲染，清除已选择区域已选中词条，绑定选项触发事件
 3. 鼠标单击已选择区域，展开下拉面板，显示备选项树形UI界面。
 4. 在下拉面板中的搜索栏输入筛选条件，触发过滤事件，只展示符合条件的备选项。
 5. 单击备选项进行备选项选中，并在已选择区域渲染显示已选中词条。单击右侧树形展开按钮，显示当前节点下级备选项列表。
@@ -24,8 +24,10 @@
 | --------------- | -------- | --------------------------------------------- |
 | width           | string   | 100px或25%                                    |
 | multiple        | boolean  | 是否多选，默认单选                            |
-| placeholder     | string   | 选择提示                                      |
-| allowClear      | boolean  | 是否显示清除按钮，只有设置了placeholder才有效 |
+| duplicate		  |boolean  | 是否可以对同一选项重复选择  |
+| selectParent	  |boolean  | 是否可以选择非叶子节点的父节点作为选项 |
+| placeholder     | string   | 占位提示信息                                |
+| allowClear      | boolean  | 是否显示刷新按钮 |
 | closeOnSelect   | boolean  | 是否选中后关闭选择框，默认true                |
 | disabled        | boolean  | 是否失效                                      |
 | readonly        | boolean  | 是否只读                                      |
@@ -34,7 +36,7 @@
 
 | 方法             | 描述                                                       |      |
 | ---------------- | ---------------------------------------------------------- | ---- |
-| select4          | 用于创建一个Select4组件，可选传入回调函数                  |      |
+| select          | 用于创建一个Select4组件，可选传入回调函数                  |      |
 | setDataSource    | 以JSON形式设置数据源，用于第一次初始化时                   |      |
 | getDataSource    | 获取当前展示选项对应的数据源JSON                           |      |
 | setSelectedValue | 设置获取选中的选项对应的代码值，展示结果为设置的代码值数组 |      |
@@ -42,4 +44,4 @@
 | getSelectedText  | 获取选中的选项对应的文本数组                               |      |
 | getOptions       | 获取所有选项的代码值和文本数组                             |      |
 | draw             | 重新绘制组件UI界面                                         |      |
-| emptyOptions     | 清空所有选项，同时清空数据源值                             |      |
+| cleanOptions     | 清空所有选项，同时清空数据源值                             |      |

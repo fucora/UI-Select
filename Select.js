@@ -31,14 +31,19 @@
 		var funcMouseOut = _funcMouseOut;
 		//已选中的选项
 		var selectedValues = [];
+		var pageNo = 1;
+		var pageNum = 0;
+		var pageSize = 20;
+		var total = 0;
 		setting = $.extend({}, {
 				mode:'local',//本地模式
-				uiPlacholder:null,//占位符文本
-				uiLength: '33.3%',//界面宽度(单位百分数或者px)
-				uiTopOffset: 10,//界面下拉界面与展示框之间的间距(单位px)
+				placeholder:'',//占位符文本
+				length: '200px',//界面宽度(单位百分数或者px)
+				topOffset: 10,//界面下拉界面与展示框之间的间距(单位px)
 				multiple:false,//是否可以多选
 				selectParent:false,//是否可以选择父节点
 				duplicate:false,//是否可以重复选
+				disabled:false,//是否禁用
 				readonly:false,//是否只读
 				callIntervalMs: 1000,//调用接口的最小时间间隔（单位毫秒）
 				enterSearch:false,//按enter键触发过滤，如果为假则任意键触发
@@ -154,6 +159,7 @@
 		 * @param {Object} text
 		 */
 		function _select(value, text){
+			_hiddenPlaceholder();
 			$('<li class="selected-item" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span><i class="selected-icon select-icon select-icon-close"></i></li>').appendTo(self.find(".selected-items"));
 			//注册选中项单击的事件
 			$("#"+ id +"__selected-items").on("click", ".selected-icon", function(e) {
@@ -172,7 +178,23 @@
 					self.data('selected-finish', false);
 				}
 				selectedOption.remove();
+				if(self.find('.selected-item').length > 0){
+					_hiddenPlaceholder();
+				}else{
+					_showPlaceholder();
+				}
 			});
+		}
+		function _showPlaceholder(){
+			if(setting.placeholder && $("#"+ id +"__selected-items>.placeholder").length == 0){
+				$('<li class="placeholder">' + setting.placeholder + '</li>').appendTo($("#"+ id +"__selected-items"));
+			}
+		}
+		
+		function _hiddenPlaceholder(){
+			if(setting.placeholder){
+				$("#"+ id +"__selected-items>.placeholder").remove();
+			}
 		}
 		/**
 		 * 渲染UI界面
@@ -284,15 +306,16 @@
 		 * 远程搜索
 		 * @param {Object} keyword 关键字
 		 */
-		function _remoteSearch(keyword){
+		function _remoteSearch(keyword, _pageNo){
 			if(!funcDataSource){
 				funcShowMessage('未提供数据源函数!');
 				return;
 			}
-			var pageSize = 20;
-			var pageNo = 1;
-			var data = funcDataSource(instance, keyword, pageSize, pageNo);
-			//TODO 发送获取远程数据源
+			if(!_pageNo){
+				_pageNo = pageNo;
+			}
+			var data = funcDataSource(instance, keyword, pageSize, _pageNo);
+			//发送获取远程数据源
 			_setDataSource(data);
 		}
 		/**
@@ -302,8 +325,18 @@
 			var _this = this;
 			self.empty();
 			var id = self.attr('id');
+			var placeholder = (setting.placeholder ? '<li class="placeholder">'+ setting.placeholder +'</li>' : '');
+			var pagination = '<!--分页区-->'
+							+'<div class="select-pagination" id="'+ id +'__pagination">'
+								+'<i class="select-pagination-button select-icon select-icon-skip-previous"></i>'
+								+'<i class="select-pagination-button select-icon select-icon-chevron-left"></i>'
+								+'<span class="select-pagination-text" id="'+ id +'__pagination-pageNo">0</span><span class="select-pagination-text">/</span><span class="select-pagination-text"  id="'+ id +'__pagination-pageNum">0</span>'
+								+'<i class="select-pagination-button select-icon select-icon-chevron-right"></i>'
+								+'<i class="select-pagination-button select-icon select-icon-skip-next"></i>'
+							+'</div>';
 			self.append('<div class="selected-bar">'
 							+'<ul class="selected-items" id="'+ id +'__selected-items">'
+							+ placeholder
 							+'</ul>'
 							+'<span class="refresh-btn select-icon select-icon-refresh" id="'+ id +'__refresh-btn"></span>'
 						+'</div>'
@@ -314,6 +347,7 @@
 							+'</div>'
 							+'<div class="items-box" id="'+ id +'__items-box">'
 							+'</div>'
+							+ (setting.mode == 'remote' ? pagination : '')
 							+'<!--信息提示区-->'
 							+'<div class="select-remind-box" id="'+ id +'__select-remind-box" style="display: none;">'
 							+'	无匹配的选项！'
@@ -372,6 +406,70 @@
 					_setDataSource({});
 				}
 			});
+			//如果是远程模式则注册事件
+			if(setting.mode == 'remote'){
+				$("#"+ id +"__pagination .select-icon-chevron-left").click(function(e){
+					e.stopPropagation(); //阻止事件冒泡
+					var keyword = $("#"+ id + "__select-input").val();
+					_remoteSearch(keyword, _getPrePageNo());
+				});
+				
+				$("#"+ id +"__pagination .select-icon-skip-previous").click(function(e){
+					e.stopPropagation(); //阻止事件冒泡
+					var keyword = $("#"+ id + "__select-input").val();
+					_remoteSearch(keyword, 1);
+				});
+				
+				$("#"+ id +"__pagination .select-icon-chevron-right").click(function(e){
+					e.stopPropagation(); //阻止事件冒泡
+					var keyword = $("#"+ id + "__select-input").val();
+					_remoteSearch(keyword, _getNextPageNo());
+				});
+				
+				$("#"+ id +"__pagination .select-icon-skip-next").click(function(e){
+					e.stopPropagation(); //阻止事件冒泡
+					var keyword = $("#"+ id + "__select-input").val();
+					_remoteSearch(keyword, _getLastPageNo());
+				});
+			}
+		}
+		
+		function _getLastPageNo(){
+			var _pageNo = 1;
+			if(total == 0){
+				_pageNo = 1;
+			}else if(Math.floor((total - 1) / pageSize + 1) > pageNo){
+				_pageNo = Math.floor((total - 1) / pageSize + 1);
+			}
+			return _pageNo;
+		}
+		
+		function _getPrePageNo(){
+			var _pageNo = Math.max(pageNo > 0 ? pageNo -1: 1, 1);
+			return _pageNo;
+		}
+		
+		function _getNextPageNo(){
+			var _pageNo = Math.min(pageNo + 1, _getLastPageNo());
+			return _pageNo;
+		}
+		
+		function _setPageNum(_pageNum){
+			$("#"+ id +"__pagination-pageNum").html(_pageNum);
+		}
+		
+		function _getPageNo(){
+			var _lastPageNo = _getLastPageNo();
+			if(pageNo< _lastPageNo){
+				return pageNo;
+			}else{
+				return _lastPageNo;
+			}
+		}
+		
+		function _setPageNo(_pageNo){
+			$("#"+ id +"__pagination-pageNo").html(_pageNo);
+			pageNo = _pageNo;
 		}
 		
 		function _setDataSource(data, totle){
@@ -380,6 +478,18 @@
 			}
 			selectedValues =  _getSelectedValue();
 			_cleanOptions();
+			if(data.total){
+				total = data.total;
+			}
+			if(data.pageSize){
+				pageSize = data.pageSize;
+			}
+			if(data.pageNo){
+				_setPageNo(data.pageNo);
+			}
+			if(data.pageNum){
+				_setPageNum(data.pageNum)
+			}
 			if(data.nodes && data.nodes.length > 0){
 				var dom = _renderUI(data);
 				dom.appendTo($("#"+ id +"__items-box"));
