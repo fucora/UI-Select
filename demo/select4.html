@@ -16,6 +16,10 @@
 		<script type="text/javascript" src="../Select.js" ></script>
 		<script>
 		var data1 = {
+					"pageSize": 10,
+					"pageNo": 4,
+					"total": 50,
+					"pageNum":5,
 					"nodes": [{
 						"text": "重庆市",
 						"value": "023",
@@ -47,7 +51,12 @@
 							}]
 						}]
 					};
-		var data2 = {"nodes": [{
+		var data2 = {
+				"pageSize": 10,
+				"pageNo": 1,
+				"total": 7,
+				"pageNum":1,
+				"nodes": [{
 					"text": "重庆市",
 					"value": "023",
 					"selected": false,
@@ -60,14 +69,20 @@
 						"nodes": null
 					}]
 		};
-		var data3 = {"nodes": [{
+		var data3 = {
+				"pageSize": 10,
+				"pageNo": 3,
+				"total": 35,
+				"pageNum":4,
+				"nodes": [{
 						"text": "重庆市",
 						"value": "023",
 						"selected": false,
 						"nodes": null
 					}]
 		};
-			var select1 = $("#xxx").select({
+			var select1 = $("#xxx").select("zzz",
+			{
 				mode: 'remote',
 				placeholder: '请选择城市',
 				multiple:false,//是否可以多选

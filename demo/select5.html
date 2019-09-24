@@ -10,7 +10,7 @@
 	<body>
 		<!--表单包裹层-->
 		<div style="width: 360px; margin: 10px;">
-			<div class="select-ui" id="xxx" data-dataSource=""></div>
+			<div class="select-ui" id="xxx"></div>
 		</div>
 		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../Select.js" ></script>
@@ -81,13 +81,14 @@
 						"nodes": null
 					}]
 		};
-			var select1 = $("#xxx").select({
+			var select1 = $("#xxx").select("zzz",
+			{
 				mode: 'remote',
 				placeholder: '请选择城市',
 				multiple:false,//是否可以多选
 				selectParent:true,//是否可以选择父节点
 				duplicate:false,//是否可以重复选
-				enterSearch: true//
+				enterSearch: false//
 			}, function(select, keyword, pageSize, pageNo){
 				console.log(pageSize);
 				console.log(pageNo);

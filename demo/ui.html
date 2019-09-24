@@ -8,76 +8,83 @@
 	</head>
 
 	<body>
-		<!--表单包裹层-->
-		<div style="width: 250px; display: inline-block;">
-			<div class="select-ui" id="xxx" data-dataSource="">
-				<div class="selected-bar">
-					<ul class="selected-items" id="xxx__selected-items">
-						<li class="selected-item" data-value="1" data-text="结果1">
-							<span>选择1</span>
-							<i class="selected-icon select-icon select-icon-close"></i>
-						</li>
-						<li class="selected-item" data-value="1" data-text="结果1">
-							<span>选择2</span>
-							<i class="selected-icon select-icon select-icon-close"></i>
-						</li>
-					</ul>
-					<span class="refresh-btn select-icon select-icon-refresh" id="xxx__refresh-btn"></span>
-				</div>
-				<div class="dropdown-items" id="xxx__dropdown_items" style="width: calc(250px - 2px);">
-					<div class="search-bar">
-						<input class="search-input" id="xxx__select-input" placeholder="请输入过滤关键词">
-						<span class="search-btn select-icon select-icon-search" id="xxx__search-btn"></span>
-					</div>
-					<div class="items-box" id="xxx__items-box">
-						<ul class="tree" style="">
-							<li class="select-option" data-value="023" data-text="重庆市">
-								<i class="item-icon select-icon "></i>
-								<span class="select-item">重庆市</span>
+		<form action="/">
+			<!--表单包裹层-->
+			<div style="width: 250px; display: inline-block;">
+				<div class="select-ui" id="xxx">
+					<div class="selected-bar">
+						<ul class="selected-items" id="xxx__selected-items">
+							<li class="selected-item" data-value="1" data-text="结果1">
+								<span>选择1</span>
+								<i class="selected-icon select-icon select-icon-close"></i>
 							</li>
-							<li class="select-option" data-value="010" data-text="北京市">
-								<i class="item-icon select-icon "></i>
-								<span class="select-item">北京市</span>
-							</li>
-							<li class="select-option" data-value="028" data-text="四川">
-								<i class="item-icon select-icon "></i>
-								<span class="select-item">四川</span>
-								<i class="unfold-icon select-icon select-icon-enter"></i>
-								<ul class="tree" style="padding-left: 16px;">
-									<li class="select-option" data-parent="028" data-value="03001" data-text="成都市">
-										<i class="item-icon select-icon "></i>
-										<span class="select-item">成都市</span>
-									</li>
-									<li class="select-option" data-parent="028" data-value="03002" data-text="宜宾市">
-										<i class="item-icon select-icon "></i>
-										<span class="select-item">宜宾市</span>
-										<i class="unfold-icon select-icon select-icon-enter"></i>
-										<ul class="tree" style="padding-left: 16px;">
-											<li class="select-option" data-parent="03002" data-value="0300201" data-text="翠屏区">
-												<i class="item-icon select-icon "></i>
-												<span class="select-item">翠屏区</span>
-											</li>
-										</ul>
-									</li>
-								</ul>
+							<li class="selected-item" data-value="1" data-text="结果1">
+								<span>选择2</span>
+								<i class="selected-icon select-icon select-icon-close"></i>
 							</li>
 						</ul>
+						<span class="refresh-btn select-icon select-icon-refresh" id="xxx__refresh-btn"></span>
+						<div style="display: none;">
+							<input name="address" type="hidden" value="1"/>
+							<input name="address" type="hidden" value="2"/>
+						</div>
 					</div>
-					<!--分页区-->
-					<div class="select-pagination" id="xxx__pagination">
-						<i class="select-pagination-button select-icon select-icon-skip-previous"></i>
-						<i class="select-pagination-button select-icon select-icon-chevron-left"></i>
-						<span class="select-pagination-text" id="xxx__pageNo">1</span><span class="select-pagination-text">/</span><span class="select-pagination-text"  id="xxx__total">20</span>
-						<i class="select-pagination-button select-icon select-icon-chevron-right"></i>
-						<i class="select-pagination-button select-icon select-icon-skip-next"></i>
-					</div>
-					<!--信息提示区-->
-					<div class="select-remind-box" id="xxx__select-remind-box" style="display: none;">
-						无匹配的选项！
+					<div class="dropdown-items" id="xxx__dropdown_items" style="width: calc(250px - 2px);">
+						<div class="search-bar">
+							<input class="search-input" id="xxx__select-input" placeholder="请输入过滤关键词">
+							<span class="search-btn select-icon select-icon-search" id="xxx__search-btn"></span>
+						</div>
+						<div class="items-box" id="xxx__items-box">
+							<ul class="tree" style="">
+								<li class="select-option" data-value="023" data-text="重庆市">
+									<i class="item-icon select-icon "></i>
+									<span class="select-item">重庆市</span>
+								</li>
+								<li class="select-option" data-value="010" data-text="北京市">
+									<i class="item-icon select-icon "></i>
+									<span class="select-item">北京市</span>
+								</li>
+								<li class="select-option" data-value="028" data-text="四川">
+									<i class="item-icon select-icon "></i>
+									<span class="select-item">四川</span>
+									<i class="unfold-icon select-icon select-icon-enter"></i>
+									<ul class="tree" style="padding-left: 16px;">
+										<li class="select-option" data-parent="028" data-value="03001" data-text="成都市">
+											<i class="item-icon select-icon "></i>
+											<span class="select-item">成都市</span>
+										</li>
+										<li class="select-option" data-parent="028" data-value="03002" data-text="宜宾市">
+											<i class="item-icon select-icon "></i>
+											<span class="select-item">宜宾市</span>
+											<i class="unfold-icon select-icon select-icon-enter"></i>
+											<ul class="tree" style="padding-left: 16px;">
+												<li class="select-option" data-parent="03002" data-value="0300201" data-text="翠屏区">
+													<i class="item-icon select-icon "></i>
+													<span class="select-item">翠屏区</span>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<!--分页区-->
+						<div class="select-pagination" id="xxx__pagination">
+							<i class="select-pagination-button select-icon select-icon-skip-previous"></i>
+							<i class="select-pagination-button select-icon select-icon-chevron-left"></i>
+							<span class="select-pagination-text" id="xxx__pageNo">1</span><span class="select-pagination-text">/</span><span class="select-pagination-text"  id="xxx__total">20</span>
+							<i class="select-pagination-button select-icon select-icon-chevron-right"></i>
+							<i class="select-pagination-button select-icon select-icon-skip-next"></i>
+						</div>
+						<!--信息提示区-->
+						<div class="select-remind-box" id="xxx__select-remind-box" style="display: none;">
+							无匹配的选项！
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<input type="submit" />
+		</form>
 	</body>
 	<!-- jQuery -->
 	<script src="http://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>

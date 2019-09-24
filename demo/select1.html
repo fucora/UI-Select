@@ -10,12 +10,16 @@
 	<body>
 		<!--表单包裹层-->
 		<div style="width: 360px; display: inline-block;">
-			<div class="select-ui" id="xxx" data-dataSource=""/>
+			<div class="select-ui" id="xxx"/>
 		</div>
 		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../Select.js" ></script>
 		<script>
 		var data1 = {
+					"pageSize": 10,
+					"pageNo": 4,
+					"total": 50,
+					"pageNum":5,
 					"nodes": [{
 						"text": "重庆市",
 						"value": "023",
@@ -47,7 +51,12 @@
 							}]
 						}]
 					};
-		var data2 = {"nodes": [{
+		var data2 = {
+				"pageSize": 10,
+				"pageNo": 1,
+				"total": 7,
+				"pageNum":1,
+				"nodes": [{
 					"text": "重庆市",
 					"value": "023",
 					"selected": false,
@@ -60,31 +69,38 @@
 						"nodes": null
 					}]
 		};
-		var data3 = {"nodes": [{
+		var data3 = {
+				"pageSize": 10,
+				"pageNo": 3,
+				"total": 35,
+				"pageNum":4,
+				"nodes": [{
 						"text": "重庆市",
 						"value": "023",
 						"selected": false,
 						"nodes": null
 					}]
 		};
-			var select = $("#xxx").select({
-				mode: 'remote',
-				multiple:true,//是否可以多选
-				selectParent:false,//是否可以选择父节点
-				duplicate:false,//是否可以重复选
-				enterSearch: true//
-			}, function(select, keyword, pageSize, pageNo){
-				var pageSize = 20;
-				var pageNo = 1;
-				var total = 20;
-				if(keyword == '直辖市'){
-					return data2;
-				}else if(keyword == '重庆'){
-					return data3;
-				}else{
-					return data1;
-				}
-			});
+			var select = $("#xxx").select("zzz",
+				{
+					mode: 'remote',
+					multiple:true,//是否可以多选
+					selectParent:false,//是否可以选择父节点
+					duplicate:false,//是否可以重复选
+					enterSearch: true//
+				}, 
+				function(select, keyword, pageSize, pageNo){
+					var pageSize = 20;
+					var pageNo = 1;
+					var total = 20;
+					if(keyword == '直辖市'){
+						return data2;
+					}else if(keyword == '重庆'){
+						return data3;
+					}else{
+						return data1;
+					}
+				});
 		</script>
 	</body>
 </html>

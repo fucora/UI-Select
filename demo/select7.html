@@ -3,15 +3,22 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>本地数据源</title>
+		<title>表单提交</title>
 		<link href="../select.css" rel="stylesheet" />
 	</head>
 
 	<body>
-		<!--表单包裹层-->
-		<div style="width: 360px; margin: 10px;">
-			<div class="select-ui" id="xxx" data-dataSource=""></div>
-		</div>
+		<form>
+			<!--表单包裹层-->
+			<div style="width: 360px; margin: 10px;">
+				<div class="select-ui" id="xxx"></div>
+			</div>
+			<!--表单包裹层-->
+			<div style="width: 360px; margin: 10px;">
+				<div class="select-ui" id="yyy"></div>
+			</div>
+			<input type="submit"/>
+		</form>
 		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../Select.js" ></script>
 		<script>
@@ -67,7 +74,7 @@
 						"nodes": null
 					}]
 		};
-			var select1 = $("#xxx").select("zzz",
+			var select1 = $("#xxx").select("name1",
 			{
 				mode: 'local',
 				placeholder: '请选择城市',
@@ -77,6 +84,17 @@
 				enterSearch: true//
 			})
 			.setDataSource(data1);
+			
+			var select1 = $("#yyy").select("name2",
+			{
+				mode: 'local',
+				placeholder: '请选择城市',
+				multiple:true,//是否可以多选
+				selectParent:true,//是否可以选择父节点
+				duplicate:true,//是否可以重复选
+				enterSearch: true//
+			})
+			.setDataSource(data2);
 		</script>
 	</body>
 </html>

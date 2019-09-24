@@ -6,6 +6,7 @@
 (function($, window) {
 	/**
 	 * 构建Select对象
+	 * @param {Object} _name	组件在表单的名称
 	 * @param {Object} setting	配置对象
 	 * @param {Object} funcDataSource	数据源函数
 	 * @param {Object} funcShowMessage 消息显示函数
@@ -13,17 +14,19 @@
 	 * @param {Object} funcHover	悬浮函数
 	 * @param {Object} funcMouseout	鼠标移出函数
 	 */
-	$.fn.select = function(_setting,
+	$.fn.select = function(_name,
+								_setting,
 							   	_funcDataSource,
 								_funcShowMessage,
 							   	_funcClick,
 							   	_funcHover,
 							   	_funcMouseOut
-							   ){
+							  ){
 		//组件当前的DOM
 		var setting;
 		var self = $(this);
 		var id = $(this).attr('id');
+		var name = (_name? _name : id);
 		var funcDataSource = _funcDataSource;
 		var funcShowMessage;
 		var funcClick = _funcClick;
@@ -160,13 +163,16 @@
 		 */
 		function _select(value, text){
 			_hiddenPlaceholder();
-			$('<li class="selected-item" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span><i class="selected-icon select-icon select-icon-close"></i></li>').appendTo(self.find(".selected-items"));
+			//随机编号
+			var uid = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
+			$('<li class="selected-item" data-uid="'+ uid +'" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span><i class="selected-icon select-icon select-icon-close"></i></li>').appendTo(self.find(".selected-items"));
+			$('<input type="hidden" name="'+ name +'" data-uid="'+ uid +'"  value="' + value + '"></input>').appendTo($("#" + id + "__inputs"));
 			//注册选中项单击的事件
 			$("#"+ id +"__selected-items").on("click", ".selected-icon", function(e) {
 				e.stopPropagation(); //阻止事件冒泡
-				var selectedOption = $(this).parent(".selected-item");
+				var selectedItem = $(this).parent(".selected-item");
 				if(setting.multiple){//如果是多选，则查找选择的备选项进行显示和移出禁用
-					var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedOption.data('value')+"]:hidden");
+					var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedItem.data('value')+"]:hidden");
 					if(hiddenSelectItem.length > 0){
 						hiddenSelectItem.removeAttr('disabled');
 						hiddenSelectItem.show();
@@ -177,7 +183,9 @@
 					selectItems.show();
 					self.data('selected-finish', false);
 				}
-				selectedOption.remove();
+				var _uid = selectedItem.data('uid');
+				$("#"+ id +"__inputs").find("input[data-uid="+ _uid +"]").remove();
+				selectedItem.remove();
 				if(self.find('.selected-item').length > 0){
 					_hiddenPlaceholder();
 				}else{
@@ -338,12 +346,13 @@
 							+'<ul class="selected-items" id="'+ id +'__selected-items">'
 							+ placeholder
 							+'</ul>'
+							+'<div id="'+ id +'__inputs" style="display:none;"></div>'
 							+'<span class="refresh-btn select-icon select-icon-refresh" id="'+ id +'__refresh-btn"></span>'
 						+'</div>'
 						+'<div class="dropdown-items" id="'+ id +'__dropdown_items" style="width: calc('+ self.width() +'px - 2px); display: none;">'
 							+'<div class="search-bar">'
 								+'<input class="search-input" id="'+ id +'__select-input" placeholder="'+ (setting.mode == 'local' ? setting.local.searchPlaceholder:setting.remote.searchPlaceholder) +'">'
-								+'<span class="search-btn select-icon select-icon-search" id="'+ id +'__search-btn"></span>'
+								+'<span class="search-btn select-icon '+ (setting.mode == 'local' ? 'select-icon-filter' : 'select-icon-search') +'" id="'+ id +'__search-btn"></span>'
 							+'</div>'
 							+'<div class="items-box" id="'+ id +'__items-box">'
 							+'</div>'
