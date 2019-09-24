@@ -265,7 +265,6 @@
 		 * @param {Object} node 节点数据
 		 */
 		function _renderNode(node){
-//			var uid = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
 			var icon = node.icon ? node.icon : '';
 			var value = node.value;
 			var text = node.text;
@@ -471,7 +470,9 @@
 				});
 			}
 		}
-		
+		/**
+		 * 获取最后一页页码
+		 */
 		function _getLastPageNo(){
 			var _pageNo = 1;
 			if(total == 0){
@@ -481,21 +482,30 @@
 			}
 			return _pageNo;
 		}
-		
+		/**
+		 * 获取前一页的页码
+		 */
 		function _getPrePageNo(){
 			var _pageNo = Math.max(pageNo > 0 ? pageNo -1: 1, 1);
 			return _pageNo;
 		}
-		
+		/**
+		 * 获取下一页的页码
+		 */
 		function _getNextPageNo(){
 			var _pageNo = Math.min(pageNo + 1, _getLastPageNo());
 			return _pageNo;
 		}
-		
+		/**
+		 * 设置总共页数
+		 * @param {Object} _pageNum 页数
+		 */
 		function _setPageNum(_pageNum){
 			$("#"+ id +"__pagination-pageNum").html(_pageNum);
 		}
-		
+		/**
+		 * 获取当前页页码
+		 */
 		function _getPageNo(){
 			var _lastPageNo = _getLastPageNo();
 			if(pageNo< _lastPageNo){
@@ -504,13 +514,19 @@
 				return _lastPageNo;
 			}
 		}
-		
+		/**
+		 * 设置当前页页码
+		 * @param {Object} _pageNo
+		 */
 		function _setPageNo(_pageNo){
 			$("#"+ id +"__pagination-pageNo").html(_pageNo);
 			pageNo = _pageNo;
 		}
-		
-		function _setDataSource(data, totle){
+		/**
+		 * 设置数据源
+		 * @param {Object} data 数据JSON对象格式或者字符串格式
+		 */
+		function _setDataSource(data){
 			if(typeof(data) == 'string') {
 				data = JSON.parse(data);
 			}
@@ -540,7 +556,9 @@
 			}
 			_bindEvent();
 		}
-		
+		/**
+		 * 获取对象格式的数据源JSON
+		 */
 		function _getDataSource(){
 			var json = self.data("dataSource");
 			if(typeof(json) == 'string') {
