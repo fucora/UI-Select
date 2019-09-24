@@ -22,21 +22,33 @@
 							   	_funcHover,
 							   	_funcMouseOut
 							  ){
-		//组件当前的DOM
+		
 		var setting;
+		//组件最外层的div
 		var self = $(this);
+		//组件编号
 		var id = $(this).attr('id');
+		//组件名称
 		var name = (_name? _name : id);
+		//数据源回调函数
 		var funcDataSource = _funcDataSource;
+		//消息提示回调函数
 		var funcShowMessage;
+		//单击事件回调函数
 		var funcClick = _funcClick;
+		//鼠标悬浮回调函数
 		var funcHover = _funcHover;
+		//鼠标移出组件回调函数
 		var funcMouseOut = _funcMouseOut;
 		//已选中的选项
 		var selectedValues = [];
+		//当前页码
 		var pageNo = 1;
+		//分页页数
 		var pageNum = 0;
+		//分页大小
 		var pageSize = 20;
+		//记录总条数
 		var total = 0;
 		setting = $.extend({}, {
 				mode:'local',//本地模式
@@ -48,6 +60,7 @@
 				duplicate:false,//是否可以重复选
 				disabled:false,//是否禁用
 				readonly:false,//是否只读
+				closeOnSelect:false,//选择后就立即关闭下拉面板
 				callIntervalMs: 1000,//调用接口的最小时间间隔（单位毫秒）
 				enterSearch:false,//按enter键触发过滤，如果为假则任意键触发
 				local:{
@@ -58,8 +71,9 @@
 				}
 		}, _setting);
 		
+		//如果没有消息函数，则构建一个默认的以alert替代的函数
 		if(!_funcShowMessage){
-			funcShowMessage = function(message){
+			funcShowMessage = function(title, message){
 				alert(message);
 			};
 		}else{
@@ -162,11 +176,14 @@
 		 * @param {Object} text
 		 */
 		function _select(value, text){
-			_hiddenPlaceholder();
+			_hidePlaceholder();
 			//随机编号
 			var uid = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
 			$('<li class="selected-item" data-uid="'+ uid +'" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span><i class="selected-icon select-icon select-icon-close"></i></li>').appendTo(self.find(".selected-items"));
 			$('<input type="hidden" name="'+ name +'" data-uid="'+ uid +'"  value="' + value + '"></input>').appendTo($("#" + id + "__inputs"));
+			if(setting.closeOnSelect){
+				
+			}
 			//注册选中项单击的事件
 			$("#"+ id +"__selected-items").on("click", ".selected-icon", function(e) {
 				e.stopPropagation(); //阻止事件冒泡
@@ -187,22 +204,32 @@
 				$("#"+ id +"__inputs").find("input[data-uid="+ _uid +"]").remove();
 				selectedItem.remove();
 				if(self.find('.selected-item').length > 0){
-					_hiddenPlaceholder();
+					_hidePlaceholder();
 				}else{
 					_showPlaceholder();
 				}
 			});
 		}
+		/**
+		 * 显示占位符
+		 */
 		function _showPlaceholder(){
 			if(setting.placeholder && $("#"+ id +"__selected-items>.placeholder").length == 0){
 				$('<li class="placeholder">' + setting.placeholder + '</li>').appendTo($("#"+ id +"__selected-items"));
 			}
 		}
-		
-		function _hiddenPlaceholder(){
+		/**
+		 * 隐藏占位符
+		 */
+		function _hidePlaceholder(){
 			if(setting.placeholder){
 				$("#"+ id +"__selected-items>.placeholder").remove();
 			}
+		}
+		
+		function _hideDropdownPanel(){
+			self.find(".dropdown-items").hide();
+			self.find("#"+ id + "__select-input").val('');
 		}
 		/**
 		 * 渲染UI界面
@@ -316,7 +343,7 @@
 		 */
 		function _remoteSearch(keyword, _pageNo){
 			if(!funcDataSource){
-				funcShowMessage('未提供数据源函数!');
+				funcShowMessage('错误','未提供数据源函数!');
 				return;
 			}
 			if(!_pageNo){
@@ -372,8 +399,7 @@
 				if(self.is(e.target) || self.has(e.target).length > 0){
 					return;
 				}
-				self.find(".dropdown-items").hide();
-				self.find("#"+ id + "__select-input").val('');
+				_hideDropdownPanel();
 				//阻止事件冒泡
 				e.stopPropagation();
 			});
@@ -406,9 +432,10 @@
 			
 			$("#"+ id +"__refresh-btn").click(function(e){
 				e.stopPropagation(); //阻止事件冒泡
-				$("#"+ id +"__dropdown_items").hide();
-				var remindBox = $("#"+ id +"__select-remind-box");
+				_hideDropdownPanel();
 				_cleanSelecteds();
+				_showPlaceholder();
+				var remindBox = $("#"+ id +"__select-remind-box");
 				remindBox.html('');
 				remindBox.hide();
 				if(setting.mode != 'local'){

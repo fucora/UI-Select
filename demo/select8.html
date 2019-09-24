@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>不设置id</title>
+		<link href="../select.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!--表单包裹层-->
+		<div style="width: 360px; margin: 10px;">
+			<div class="select-ui" id="xxx"></div>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../Select.js" ></script>
+		<script>
+		var data1 = {
+					"nodes": [{
+						"text": "重庆市",
+						"value": "023",
+						"selected": false,
+						"nodes": null
+					}, {
+						"text": "北京市",
+						"value": "010",
+						"selected": false,
+						"nodes": null
+					}, {
+						"text": "四川",
+						"value": "028",
+						"selected": false,
+						"nodes": [{
+								"text": "成都市",
+								"value": "03001",
+								"selected": false,
+								"nodes": null
+							}, {
+								"text": "宜宾市",
+								"value": "03002",
+								"selected": false,
+								"nodes": [{
+									"text": "翠屏区",
+									"value": "0300201",
+									"selected": false
+								}]
+							}]
+						}]
+					};
+		var data2 = {"nodes": [{
+					"text": "重庆市",
+					"value": "023",
+					"selected": false,
+					"nodes": null
+						}, 
+					{
+						"text": "北京市",
+						"value": "010",
+						"selected": false,
+						"nodes": null
+					}]
+		};
+		var data3 = {"nodes": [{
+						"text": "重庆市",
+						"value": "023",
+						"selected": false,
+						"nodes": null
+					}]
+		};
+			var select1 = $("#xxx").select("name1",
+			{
+				mode: 'local',
+				placeholder: '请选择城市',
+				multiple:false,//是否可以多选
+				selectParent:true,//是否可以选择父节点
+				duplicate:false,//是否可以重复选
+				enterSearch: true//
+			})
+			.setDataSource(data1);
+		</script>
+	</body>
+</html>
+				
