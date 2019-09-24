@@ -265,6 +265,7 @@
 		 * @param {Object} node 节点数据
 		 */
 		function _renderNode(node){
+//			var uid = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
 			var icon = node.icon ? node.icon : '';
 			var value = node.value;
 			var text = node.text;
@@ -432,6 +433,7 @@
 			
 			$("#"+ id +"__refresh-btn").click(function(e){
 				e.stopPropagation(); //阻止事件冒泡
+				self.data('selected-finish', false);
 				_hideDropdownPanel();
 				_cleanSelecteds();
 				_showPlaceholder();
@@ -613,13 +615,13 @@
 		 */
 		function _cleanSelecteds(){
 			self.find(".selected-icon").each(function(index, item) {
-				var selectedOption = $(item).parent(".selected-item");
-				var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedOption.data('value')+"]:hidden");
+				var selectedItem = $(item).parent(".selected-item");
+				var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedItem.data('value')+"]:hidden");
 				if(hiddenSelectItem.length > 0){
 					hiddenSelectItem.removeAttr('disabled');
 					hiddenSelectItem.show();
 				}
-				selectedOption.remove();
+				selectedItem.remove();
 			});
 		}
 		
