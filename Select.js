@@ -313,7 +313,7 @@
 			var matchCount = 0;
 			$("#"+ id +"__items-box").find(".select-option").each(function(index, ele){
 				var option = $(ele);
-				var item = option.find(".select-item");
+				var item = option.find(">.select-item");
 				var text = option.data('text');
 				var value = option.data('value');
 				var pos = text.indexOf(keyword);
@@ -404,10 +404,6 @@
 							+'	无匹配的选项！'
 							+'</div>'
 						+'</div>');
-			$('body').on("click", "#" + id + " .selected-bar", function(e) {
-				self.find(".dropdown-items").toggle();
-			});
-
 			//注册鼠标在组件外单击，隐藏组件下拉框
 			$(document).on("click", function(e){
 				//检查当前触发事件的对象与当前的组件div是否属于包含关系
@@ -418,8 +414,13 @@
 				//阻止事件冒泡
 				e.stopPropagation();
 			});
+			
+			$("#" + id + " .selected-bar").click(function(e) {
+				self.find(".dropdown-items").toggle();
+			});
+
 			//注册单击搜索按钮，触发数据源函数
-			$('body').on("click", "#"+ id + " .search-btn", function(e){
+			$("#"+ id + " .search-btn").click(function(e){
 				var keyword = $("#"+ id + "__select-input").val();
 				if(setting.mode == 'local'){
 					_localSearch(keyword);	
@@ -428,7 +429,7 @@
 				}
 			});
 			//注册搜索框按回车，触发数据源函数
-			$('body').on("keyup", "#"+ id + "__select-input", function(e){
+			$("#"+ id + "__select-input").keyup(function(e){
 				//如果不是回车，则不进行事件处理
 				if(setting.enterSearch){
 					if(13 != event.keyCode){
@@ -483,6 +484,11 @@
 					var keyword = $("#"+ id + "__select-input").val();
 					_remoteSearch(keyword, _getLastPageNo());
 				});
+			}
+			//如果存在数据源则进行渲染
+			var dataSource = self.data('dataSource');
+			if(dataSource){
+				_renderUI(dataSource);
 			}
 		}
 		/**
@@ -583,7 +589,10 @@
 			}
 			return json;
 		}
-		
+		/**
+		 * 设置选中的选项
+		 * @param {Object} data 选项值数组
+		 */
 		function _setSelectedValue(data){
 			if(typeof(data) == 'string') {
 				data = JSON.parse(data);
@@ -599,7 +608,7 @@
 					}
 				}
 			}
-			var options = this.getOptions();
+			var options = _getOptions();
 			for (var i = 0; i < options.length; i++) {
 				var option = options[i]
 				//检查选线是否在需要设置的选项值
@@ -607,11 +616,11 @@
 					if(setting.duplicate){//如果允许重复，则需要按照选中值进行遍历
 						for(var index in selects){
 							if(option['value'] == selects[index]){
-								this.select(option['value'], option['text']);
+								_select(option['value'], option['text']);
 							}
 						}
 					}else{
-						this.select(option['value'], option['text']);
+						_select(option['value'], option['text']);
 					}
 				}
 			}
@@ -651,13 +660,14 @@
 		function _cleanSelecteds(){
 			self.find(".selected-icon").each(function(index, item) {
 				var selectedItem = $(item).parent(".selected-item");
-				var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedItem.data('value')+"]:hidden");
-				if(hiddenSelectItem.length > 0){
-					hiddenSelectItem.removeAttr('disabled');
-					hiddenSelectItem.show();
-				}
+				//对于隐藏的备选项进行恢复为可选
+				var selectItems = $("#"+ id +"__items-box .select-option[data-value="+selectedItem.data('value')+"]");
+				selectItems.removeAttr('disabled');
+				selectItems.show();
 				selectedItem.remove();
 			});
+			self.data('selected-finish', false);
+			_showPlaceholder();
 		}
 		
 		/**
@@ -742,10 +752,24 @@
 				return _getSelectedText();
 			},
 			/**
-			 * 获取选项
+			 * 清除已选择的选项
+			 */
+			cleanSelecteds: function(){
+				_cleanSelecteds();
+				return this;
+			},
+			/**
+			 * 获取选项数组
 			 */
 			getOptions: function() {
 				return _getOptions();
+			},
+			/**
+			 * 清除备选项
+			 */
+			cleanOptions: function() {
+				_cleanOptions();
+				return this;
 			}
 		};
 		
