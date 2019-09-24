@@ -51,8 +51,9 @@
 		name = (!name? (!_name? id : _name) : name);
 		pageNo = (!pageNo? 1 : pageNo);
 		pageNum = (!pageNum? 0 : pageNum);
-		pageSize = (!pageSize? 20 : pageSize);
-		total = (!total? 20 : total);
+		pageSize = (!pageSize? 10 : pageSize);
+		total = (!total? 0 : total);
+		var lastKeyword = "";
 		_setting = (!_setting? JSON.parse(self.data('setting')) : _setting);
 		setting = $.extend({}, {
 				mode:'local',//本地模式
@@ -248,7 +249,7 @@
 		function _renderUI(data){
 			var selectedValues = self.data('selectedValues');
 			selectedValues = selectedValues ? selectedValues : _getSelectedValue();
-			selectedValues = ((typeof selectedValues == 'string')? JSON.parse(selectedValues): selectedValues);
+			selectedValues = ((typeof(selectedValues) == 'string')? JSON.parse(selectedValues): selectedValues);
 			//JSON数据存在nodes节点，且存在至少一个结果进行渲染
 			return _renderNodes(data.nodes, 0, selectedValues);
 		}
@@ -344,10 +345,11 @@
 				}
 			});
 			//没有匹配的结果，显示提示信息
+			var remindBox = $("#"+ id +"__select-remind-box");
 			if(matchCount == 0){
-				showMessage('无匹配的选项！');
+				remindBox.html('无匹配的选项！');
+				remindBox.show();
 			}else{
-				var remindBox = $("#"+ id +"__select-remind-box");
 				remindBox.html('');
 				remindBox.hide();
 			}
@@ -361,12 +363,22 @@
 				funcShowMessage('错误','未提供数据源函数!');
 				return;
 			}
-			if(!_pageNo){
-				_pageNo = pageNo;
+			if(lastKeyword != keyword){//如果搜索关键词不一样，则重置为1
+				_pageNo = 1;
+			}else{//如果搜索关键词一样，则在存在指定页码时使用，否则使用当前的
+				if(!_pageNo){
+					_pageNo = pageNo;
+				}
 			}
+			
 			var data = funcDataSource(instance, keyword, pageSize, _pageNo);
-			//发送获取远程数据源
-			_setDataSource(data);
+			//如果无数据返回，可能是数据源回调接口已在内部执行设置数据源函数
+			if(data != undefined && data != null){
+				//发送获取远程数据源
+				_setDataSource(data);
+			}
+			//每次搜索完保存上一次的搜索结果
+			lastKeyword = keyword;
 		}
 		/**
 		 * 绘制组件
@@ -551,21 +563,32 @@
 		 * @param {Object} data 数据JSON对象格式或者字符串格式
 		 */
 		function _setDataSource(data){
+			if(data == undefined || data == null){
+				data = {};
+			}
 			if(typeof(data) == 'string') {
 				data = JSON.parse(data);
 			}
 			_cleanOptions();
 			if(data.total){
 				total = data.total;
+			}else{
+				total = 0;
 			}
 			if(data.pageSize){
 				pageSize = data.pageSize;
+			}else{
+				pageSize = 10;
 			}
 			if(data.pageNo){
 				_setPageNo(data.pageNo);
+			}else{
+				_setPageNo(1);
 			}
 			if(data.pageNum){
 				_setPageNum(data.pageNum)
+			}else{
+				_setPageNum(0)
 			}
 			if(data.nodes && data.nodes.length > 0){
 				var dom = _renderUI(data);
@@ -573,9 +596,21 @@
 				var ops = _doOptions(data.nodes, null);
 				self.data("dataSource", data);
 				self.data("options", JSON.stringify(ops));
+				if(setting.mode == 'remote'){//如果是远程模式，且有结果返回时
+					//有匹配的结果，隐藏提示信息
+					var remindBox = $("#"+ id +"__select-remind-box");
+					remindBox.html('');
+					remindBox.hide();
+				}
 			}else{
 				self.data("dataSource", data);
 				self.data("options", JSON.stringify([]));
+				if(setting.mode == 'remote'){//如果是远程模式，且没有结果返回时
+					//没有匹配的结果，显示提示信息
+					var remindBox = $("#"+ id +"__select-remind-box");
+					remindBox.html('换个关键字试试！');
+					remindBox.show();
+				}
 			}
 			_bindEvent();
 		}

@@ -1,0 +1,1 @@
+java -jar .\compiler-v20190709.jar --js_output_file=select.min.js .\select.js  --create_source_map select.min.map
