@@ -6,16 +6,16 @@
 (function($, window) {
 	/**
 	 * 构建Select对象
+	 * @param {Object} _setting	配置对象
 	 * @param {Object} _name	组件在表单的名称
-	 * @param {Object} setting	配置对象
-	 * @param {Object} funcDataSource	数据源函数
-	 * @param {Object} funcShowMessage 消息显示函数
-	 * @param {Object} funcClick	单击函数
-	 * @param {Object} funcHover	悬浮函数
-	 * @param {Object} funcMouseout	鼠标移出函数
+	 * @param {Object} _funcDataSource	数据源函数
+	 * @param {Object} _funcShowMessage 消息显示函数
+	 * @param {Object} _funcClick	单击函数
+	 * @param {Object} _funcHover	悬浮函数
+	 * @param {Object} _funcMouseout	鼠标移出函数
 	 */
-	$.fn.select = function(_name,
-								_setting,
+	$.fn.select = function(		_setting,
+								_name,
 							   	_funcDataSource,
 								_funcShowMessage,
 							   	_funcClick,
@@ -182,7 +182,7 @@
 			$('<li class="selected-item" data-uid="'+ uid +'" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span><i class="selected-icon select-icon select-icon-close"></i></li>').appendTo(self.find(".selected-items"));
 			$('<input type="hidden" name="'+ name +'" data-uid="'+ uid +'"  value="' + value + '"></input>').appendTo($("#" + id + "__inputs"));
 			if(setting.closeOnSelect){
-				
+				_hideDropdownPanel();
 			}
 			//注册选中项单击的事件
 			$("#"+ id +"__selected-items").on("click", ".selected-icon", function(e) {

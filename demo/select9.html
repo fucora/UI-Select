@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>不设置id</title>
+		<title>选择后关闭</title>
 		<link href="../select.css" rel="stylesheet" />
 	</head>
 
@@ -11,6 +11,10 @@
 		<!--表单包裹层-->
 		<div style="width: 360px; margin: 10px;">
 			<div class="select-ui" id="xxx"></div>
+		</div>
+		<!--表单包裹层-->
+		<div style="width: 360px; margin: 10px;">
+			<div class="select-ui" id="yyy"></div>
 		</div>
 		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../Select.js" ></script>
@@ -67,15 +71,27 @@
 						"nodes": null
 					}]
 		};
-			var select1 = $("#xxx").select("name1",
+			$("#xxx").select(
 			{
-				mode: 'remote',
+				mode: 'local',
 				placeholder: '请选择城市',
 				multiple:false,//是否可以多选
 				selectParent:true,//是否可以选择父节点
 				duplicate:false,//是否可以重复选
-				enterSearch: true//
-			})
+				enterSearch: true,//是否按回车搜索
+				closeOnSelect: true//是否选择后关闭下拉面板
+			}).setDataSource(data1)
+			
+			$("#yyy").select(
+			{
+				mode: 'local',
+				placeholder: '请选择城市',
+				multiple:true,//是否可以多选
+				selectParent:true,//是否可以选择父节点
+				duplicate:false,//是否可以重复选
+				enterSearch: true,//是否按回车搜索
+				closeOnSelect: true//是否选择后关闭下拉面板
+			}).setDataSource(data2)
 		</script>
 	</body>
 </html>
