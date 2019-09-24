@@ -27,9 +27,9 @@
 		//组件最外层的div
 		var self = $(this);
 		//组件编号
-		var id = $(this).attr('id');
+		var id = self.attr('id');
 		//组件名称
-		var name = (_name? _name : id);
+		var name = self.attr('name');
 		//数据源回调函数
 		var funcDataSource = _funcDataSource;
 		//消息提示回调函数
@@ -40,16 +40,20 @@
 		var funcHover = _funcHover;
 		//鼠标移出组件回调函数
 		var funcMouseOut = _funcMouseOut;
-		//已选中的选项
-		var selectedValues = [];
 		//当前页码
-		var pageNo = 1;
+		var pageNo = self.data('pageNo');
 		//分页页数
-		var pageNum = 0;
+		var pageNum = self.data('pageNum');
 		//分页大小
-		var pageSize = 20;
+		var pageSize = self.data('pageSize');
 		//记录总条数
-		var total = 0;
+		var total = self.data('total');
+		name = (!name? (!_name? id : _name) : name);
+		pageNo = (!pageNo? 1 : pageNo);
+		pageNum = (!pageNum? 0 : pageNum);
+		pageSize = (!pageSize? 20 : pageSize);
+		total = (!total? 20 : total);
+		_setting = (!_setting? JSON.parse(self.data('setting')) : _setting);
 		setting = $.extend({}, {
 				mode:'local',//本地模式
 				placeholder:'',//占位符文本
@@ -61,7 +65,6 @@
 				disabled:false,//是否禁用
 				readonly:false,//是否只读
 				closeOnSelect:false,//选择后就立即关闭下拉面板
-				callIntervalMs: 1000,//调用接口的最小时间间隔（单位毫秒）
 				enterSearch:false,//按enter键触发过滤，如果为假则任意键触发
 				local:{
 					searchPlaceholder : '请输入过滤词'
@@ -70,6 +73,13 @@
 					searchPlaceholder : '请输入搜索关键词'
 				}
 		}, _setting);
+		
+		self.data('name', name);
+		self.data('pageNo', pageNo);
+		self.data('pageNum', pageNum);
+		self.data('pageSize', pageSize);
+		self.data('total', total);
+		self.data('setting', JSON.stringify(setting));
 		
 		//如果没有消息函数，则构建一个默认的以alert替代的函数
 		if(!_funcShowMessage){
@@ -236,24 +246,28 @@
 		 * @param {Object} data 数据
 		 */
 		function _renderUI(data){
+			var selectedValues = self.data('selectedValues');
+			selectedValues = selectedValues ? selectedValues : _getSelectedValue();
+			selectedValues = ((typeof selectedValues == 'string')? JSON.parse(selectedValues): selectedValues);
 			//JSON数据存在nodes节点，且存在至少一个结果进行渲染
-			return _renderNodes(data.nodes, 0);
+			return _renderNodes(data.nodes, 0, selectedValues);
 		}
 		
 		/**
 		 * 渲染节点数据
 		 * @param {Object} nodes 节点数据
 		 * @param {Object} deep 深度
+		 * @param {Object} selectedValues 已选中的值
 		 */
-		function _renderNodes(nodes, deep){
+		function _renderNodes(nodes, deep, selectedValues){
 			var root = $('<ul class="tree" style="' + (deep != 0 ? 'padding-left: 16px;display: none;' : '') + '"></ul>');
 			for(var index in nodes) {
 				var node = nodes[index];
-				var element = _renderNode(node);
+				var element = _renderNode(node, selectedValues);
 				//存在子节点
 				if(node.nodes) {
 					element.append('<i class="unfold-icon select-icon select-icon-enter"></i>');
-					var tree = _renderNodes(node.nodes, ++deep);
+					var tree = _renderNodes(node.nodes, ++deep, selectedValues);
 					tree.appendTo(element);
 				}
 				element.appendTo(root);
@@ -263,8 +277,9 @@
 		/**
 		 * 渲染节点
 		 * @param {Object} node 节点数据
+		 * @param {Object} selectedValues 已选中的值
 		 */
-		function _renderNode(node){
+		function _renderNode(node, selectedValues){
 			var icon = node.icon ? node.icon : '';
 			var value = node.value;
 			var text = node.text;
@@ -358,8 +373,8 @@
 		 */
 		function _draw(){
 			var _this = this;
+			//清空当前组件最外层以内的所有元素
 			self.empty();
-			var id = self.attr('id');
 			var placeholder = (setting.placeholder ? '<li class="placeholder">'+ setting.placeholder +'</li>' : '');
 			var pagination = '<!--分页区-->'
 							+'<div class="select-pagination" id="'+ id +'__pagination">'
@@ -502,6 +517,8 @@
 		 */
 		function _setPageNum(_pageNum){
 			$("#"+ id +"__pagination-pageNum").html(_pageNum);
+			pageNum = _pageNum;
+			self.data('pageNum', _pageNum);
 		}
 		/**
 		 * 获取当前页页码
@@ -521,6 +538,7 @@
 		function _setPageNo(_pageNo){
 			$("#"+ id +"__pagination-pageNo").html(_pageNo);
 			pageNo = _pageNo;
+			self.data('pageNo', pageNo);
 		}
 		/**
 		 * 设置数据源
@@ -530,7 +548,6 @@
 			if(typeof(data) == 'string') {
 				data = JSON.parse(data);
 			}
-			selectedValues =  _getSelectedValue();
 			_cleanOptions();
 			if(data.total){
 				total = data.total;
@@ -676,12 +693,6 @@
 		Select.prototype = {
 			constructor: Select,
 			/**
-			 * 绑定事件
-			 */
-			bindEvent: function() {
-				return _bindEvent();
-			},
-			/**
 			 * 选中给定代码值和文本的选项
 			 * @param {Object} value 代码值
 			 * @param {Object} text 文本
@@ -690,24 +701,19 @@
 				return _select(value, text);
 			},
 			/**
-			 * 渲染数据为UI
-			 * @param {Object} data
-			 */
-			renderUI: function(data){
-				return _renderUI(data);
-			},
-			/**
 			 * 绘制组件
 			 */
 			draw: function(){
-				return _draw();
+				_draw();
+				return this;
 			},
 			/**
 			 * 在一个给定的组件ID以JSON对象设置数据源
 			 * @param {Object} data 形如{nodes:[{text:'测试项1', value:123},{text:'测试项2', value:456}], pageSize:20, pageNo:1, total:20}
 			 */
 			setDataSource: function(data) {
-				return _setDataSource(data);
+				_setDataSource(data);
+				return this;
 			},
 			/**
 			 * 获取数据源，返回得是一个JSON对象
@@ -720,7 +726,8 @@
 			 * @param {Object} value 选中的编码值，例如123
 			 */
 			setSelectedValue: function(data) {
-				return _setSelectedValue(data);
+				_setSelectedValue(data);
+				return this;
 			},
 			/**
 			 * 在一个给定的组件ID获取选中的值，返回结果为选中的编码值数组
@@ -748,8 +755,12 @@
 							   _funcHover,
 							   _funcMouseOut,
 							   _setting);
-		//绘制组件
-		instance.draw();
+		var drawed = self.data('drawed');
+		if(!drawed){
+			//绘制组件
+			instance.draw();
+			self.data('drawed', true);
+		}
 		return instance;
 	};
 })(jQuery, window);
