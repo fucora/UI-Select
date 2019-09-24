@@ -27,7 +27,7 @@
 | duplicate		  |boolean  | 是否可以对同一选项重复选择  |
 | selectParent	  |boolean  | 是否可以选择非叶子节点的父节点作为选项 |
 | placeholder     | string   | 占位提示信息                                |
-| allowClear      | boolean  | 是否显示刷新按钮 |
+| allowClear      | boolean  | 是否显示刷新按钮 								|
 | closeOnSelect   | boolean  | 是否选中后关闭选择框，默认true                |
 | disabled        | boolean  | 是否失效                                      |
 | readonly        | boolean  | 是否只读                                      |
