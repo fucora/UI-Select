@@ -88,8 +88,11 @@
 				multiple:false,//是否可以多选
 				selectParent:true,//是否可以选择父节点
 				duplicate:false,//是否可以重复选
-				enterSearch: false//
-			}, function(select, keyword, pageSize, pageNo){
+				enterSearch: false,//
+				readonly:true
+			},
+			'xxx',
+			function(select, keyword, pageSize, pageNo){
 				console.log(pageSize);
 				console.log(pageNo);
 				if(keyword == '直辖市'){

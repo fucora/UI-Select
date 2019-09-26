@@ -190,36 +190,39 @@
 			_hidePlaceholder();
 			//随机编号
 			var uid = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
-			$('<li class="selected-item" data-uid="'+ uid +'" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span><i class="selected-icon select-icon select-icon-close"></i></li>').appendTo(self.find(".selected-items"));
+			var closeBtn = '<i class="selected-icon select-icon select-icon-close"></i>';
+			$('<li class="selected-item" data-uid="'+ uid +'" data-value="' + value + '" data-text="' + text + '"><span>' + text + '</span>' + (setting.readonly ? '' :closeBtn ) + '</li>').appendTo(self.find(".selected-items"));
 			$('<input type="hidden" name="'+ name +'" data-uid="'+ uid +'"  value="' + value + '"></input>').appendTo($("#" + id + "__inputs"));
 			if(setting.closeOnSelect){
 				_hideDropdownPanel();
 			}
 			//注册选中项单击的事件
-			$("#"+ id +"__selected-items").on("click", ".selected-icon", function(e) {
-				e.stopPropagation(); //阻止事件冒泡
-				var selectedItem = $(this).parent(".selected-item");
-				if(setting.multiple){//如果是多选，则查找选择的备选项进行显示和移出禁用
-					var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedItem.data('value')+"]:hidden");
-					if(hiddenSelectItem.length > 0){
-						hiddenSelectItem.removeAttr('disabled');
-						hiddenSelectItem.show();
+			if(!setting.readonly){
+				$("#"+ id +"__selected-items").on("click", ".selected-icon", function(e) {
+					e.stopPropagation(); //阻止事件冒泡
+					var selectedItem = $(this).parent(".selected-item");
+					if(setting.multiple){//如果是多选，则查找选择的备选项进行显示和移出禁用
+						var hiddenSelectItem = $("#"+ id +"__items-box .select-option[data-value="+selectedItem.data('value')+"]:hidden");
+						if(hiddenSelectItem.length > 0){
+							hiddenSelectItem.removeAttr('disabled');
+							hiddenSelectItem.show();
+						}
+					}else{//如果是单选，则移出所有选项的禁用状态，并且显示
+						selectItems = $("#"+ id +"__items-box .select-option");
+						selectItems.removeAttr('disabled');
+						selectItems.show();
+						self.data('selected-finish', false);
 					}
-				}else{//如果是单选，则移出所有选项的禁用状态，并且显示
-					selectItems = $("#"+ id +"__items-box .select-option");
-					selectItems.removeAttr('disabled');
-					selectItems.show();
-					self.data('selected-finish', false);
-				}
-				var _uid = selectedItem.data('uid');
-				$("#"+ id +"__inputs").find("input[data-uid="+ _uid +"]").remove();
-				selectedItem.remove();
-				if(self.find('.selected-item').length > 0){
-					_hidePlaceholder();
-				}else{
-					_showPlaceholder();
-				}
-			});
+					var _uid = selectedItem.data('uid');
+					$("#"+ id +"__inputs").find("input[data-uid="+ _uid +"]").remove();
+					selectedItem.remove();
+					if(self.find('.selected-item').length > 0){
+						_hidePlaceholder();
+					}else{
+						_showPlaceholder();
+					}
+				});
+			}
 		}
 		/**
 		 * 显示占位符
@@ -388,6 +391,7 @@
 			//清空当前组件最外层以内的所有元素
 			self.empty();
 			var placeholder = (setting.placeholder ? '<li class="placeholder">'+ setting.placeholder +'</li>' : '');
+			var refreshBtn = '<span class="refresh-btn select-icon select-icon-refresh" id="'+ id +'__refresh-btn"></span>';
 			var pagination = '<!--分页区-->'
 							+'<div class="select-pagination" id="'+ id +'__pagination">'
 								+'<i class="select-pagination-button select-icon select-icon-skip-previous"></i>'
@@ -401,7 +405,7 @@
 							+ placeholder
 							+'</ul>'
 							+'<div id="'+ id +'__inputs" style="display:none;"></div>'
-							+'<span class="refresh-btn select-icon select-icon-refresh" id="'+ id +'__refresh-btn"></span>'
+							+ (setting.readonly ? '' : refreshBtn)
 						+'</div>'
 						+'<div class="dropdown-items" id="'+ id +'__dropdown_items" style="width: calc('+ self.width() +'px - 2px); display: none;">'
 							+'<div class="search-bar">'
@@ -427,9 +431,11 @@
 				e.stopPropagation();
 			});
 			
-			$("#" + id + " .selected-bar").click(function(e) {
-				self.find(".dropdown-items").toggle();
-			});
+			if(!setting.readonly){
+				$("#" + id + " .selected-bar").click(function(e) {
+					self.find(".dropdown-items").toggle();
+				});
+			}
 
 			//注册单击搜索按钮，触发数据源函数
 			$("#"+ id + " .search-btn").click(function(e){
@@ -729,6 +735,9 @@
 		
 		function _getOptions(){
 			var json = self.data("options");
+			if(!json){
+				return [];
+			}
 			if(typeof(json) == 'string') {
 				json = JSON.parse(json);
 			}
